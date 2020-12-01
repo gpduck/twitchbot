@@ -11,7 +11,7 @@
     ```
     $env:TTV_USERNAME = "your username"
     $env:TTV_PASSWORD = "oauth:token"
-    $env:TTV_CHANNEL = '"your channel"
+    $env:TTV_CHANNEL = "your channel"
     ```
 1. Run the bot
     ```
