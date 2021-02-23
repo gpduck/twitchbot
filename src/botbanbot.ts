@@ -3,6 +3,8 @@ import { program } from 'commander';
 import * as fetch from 'node-fetch';
 import * as chalk from 'chalk';
 
+const exclude = [ 'CommanderRoot' ].map( name => name.toLowerCase());
+
 interface StdOptions {
     channel: string;
     user: string;
@@ -48,14 +50,16 @@ async function getHttpData(channel: string): Promise<[ bots: Record<string, bool
     ]);
     const bots: Record<string, boolean> = {};
     botList.bots.forEach( botRow => {
-        bots[botRow[0]] = true;
+        if(!exclude.includes(botRow[0].toLowerCase())) {
+            bots[botRow[0]] = true;
+        }
     });
     return [ bots, chatters ];
 }
 
 async function forEachBot(bots: Record<string, boolean>, chatters: TmiChatters, action: (bot: string) => void): Promise<void> {
     chatters.chatters.viewers.forEach( viewer => {
-        if(bots[viewer]) {
+        if(bots[viewer.toLowerCase()]) {
             action(viewer);
         }
     })
